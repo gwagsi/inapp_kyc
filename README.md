@@ -1,5 +1,5 @@
-# inapp_flutter_kyc
-The inapp_flutter_kyc package is a powerful and easy-to-use plugin that brings essential Know Your Customer (KYC) functionalities to your Flutter applications.
+# feyins_flutter_kyc
+The feyins_flutter_kyc package is a powerful and easy-to-use plugin that brings essential Know Your Customer (KYC) functionalities to your Flutter applications.
 ## Features
 
 ### Liveness Detection:
@@ -20,7 +20,7 @@ We prioritize the privacy and security of your users. Our package implements ind
 ## Getting started
 To get started with the ekyc_flutter package, follow these simple steps:
 ```
-flutter pub add inapp_flutter_kyc
+flutter pub add feyins_flutter_kyc
 ```
 ### Android
 Add this before `<application></application>` in your android/app/src/main/AndroidManifest.xml
