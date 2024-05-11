@@ -75,8 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
               style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
                 padding: const EdgeInsets.all(16.0),
-                primary: Colors.white,
                 backgroundColor: Colors.blue,
                 elevation: 9.0,
                 textStyle: const TextStyle(
@@ -104,8 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               },
               style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
                 padding: const EdgeInsets.all(16.0),
-                primary: Colors.white,
                 backgroundColor: Colors.blue,
                 elevation: 9.0,
                 textStyle: const TextStyle(
@@ -150,8 +150,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
                 },
                 style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.all(16.0),
-                  primary: Colors.white,
                   backgroundColor: Colors.blue,
                   elevation: 9.0,
                   textStyle: const TextStyle(
@@ -267,8 +267,8 @@ class ShowImage extends StatelessWidget {
                 Navigator.pop(context);
               },
               style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
                 padding: const EdgeInsets.all(16.0),
-                primary: Colors.white,
                 backgroundColor: Colors.blue,
                 elevation: 9.0,
                 textStyle: const TextStyle(
