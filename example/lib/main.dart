@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:feyins_flutter_kyc/feyins_flutter_kyc.dart';
 
@@ -84,158 +84,158 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               child: Text("Liveness Detection"),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextButton(
-              onPressed: () async {
-                extractedDataFromId =
-                    await EkycServices().openImageScanner(keyWordData);
-                if (extractedDataFromId?.extractedText != null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ShowScannedText(
-                              scannedText: extractedDataFromId!.extractedText!,
-                              keyNvalue: extractedDataFromId?.keywordNvalue,
-                            )),
-                  );
-                }
-              },
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.all(16.0),
-                backgroundColor: Colors.blue,
-                elevation: 9.0,
-                textStyle: const TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-              child: Text("Scan your Id"),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextButton(
-                onPressed: () async {
-                  if (selfieImage == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                            'Capture a selfie first using liveness detection'),
-                        duration: Duration(seconds: 3),
-                      ),
-                    );
-                  } else if (extractedDataFromId?.imagePath == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('There is no face detected in Id card'),
-                        duration: Duration(seconds: 3),
-                      ),
-                    );
-                  } else {
-                    isloading = true;
-                    setState(() {
-                      faceMatchButtonPressed = true;
-                    });
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // TextButton(
+              //   onPressed: () async {
+              //     extractedDataFromId =
+              //         await EkycServices().openImageScanner(keyWordData);
+              //     if (extractedDataFromId?.extractedText != null) {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => ShowScannedText(
+              //                   scannedText: extractedDataFromId!.extractedText!,
+              //                   keyNvalue: extractedDataFromId?.keywordNvalue,
+              //                 )),
+              //       );
+              //     }
+              //   },
+              //   style: TextButton.styleFrom(
+              //     foregroundColor: Colors.white,
+              //     padding: const EdgeInsets.all(16.0),
+              //     backgroundColor: Colors.blue,
+              //     elevation: 9.0,
+              //     textStyle: const TextStyle(
+              //       fontSize: 20,
+              //     ),
+              //   ),
+              //   child: Text("Scan your Id"),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // TextButton(
+              //     onPressed: () async {
+              //       if (selfieImage == null) {
+              //         ScaffoldMessenger.of(context).showSnackBar(
+              //           SnackBar(
+              //             content: Text(
+              //                 'Capture a selfie first using liveness detection'),
+              //             duration: Duration(seconds: 3),
+              //           ),
+              //         );
+              //       } else if (extractedDataFromId?.imagePath == null) {
+              //         ScaffoldMessenger.of(context).showSnackBar(
+              //           SnackBar(
+              //             content: Text('There is no face detected in Id card'),
+              //             duration: Duration(seconds: 3),
+              //           ),
+              //         );
+              //       } else {
+              //         isloading = true;
+              //         setState(() {
+              //           faceMatchButtonPressed = true;
+              //         });
 
-                    isMatchFace = await EkycServices().runFaceMatch(
-                        "http://10.0.3.50:5000",
-                        selfieImage?.path,
-                        extractedDataFromId?.imagePath);
-                    setState(() {
-                      isloading = false;
-                    });
-                  }
-                },
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.all(16.0),
-                  backgroundColor: Colors.blue,
-                  elevation: 9.0,
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                child: Text("Face match with Id")),
-            Visibility(
-              visible: faceMatchButtonPressed,
-              child: Container(
-                width: double.infinity,
-                // padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  color: Color(0xFFe3e6f5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          (isloading == true)
-                              ? SizedBox(
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor:
-                                        AlwaysStoppedAnimation(Colors.white),
-                                  ),
-                                  height: 50.0,
-                                  width: 50.0,
-                                )
-                              : (isMatchFace == true)
-                                  ? Icon(
-                                      Icons.check_circle_sharp,
-                                      size: 40,
-                                      color: Color(0xFF9677eca),
-                                    )
-                                  : Transform.rotate(
-                                      angle: 45 * pi / 180,
-                                      child: Icon(
-                                        Icons.add_circle,
-                                        size: 40,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                            child: Text(
-                                (isloading == true)
-                                    ? '  Running face match...'
-                                    : (isMatchFace == true)
-                                        ? "Successful!!! ID Face matches with Selfie"
-                                        : (isMatchFace == false)
-                                            ? "Something is wrong! Please try again! "
-                                            : 'NID Face does not match with Selfie',
-                                maxLines: 3,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    height: 1.5,
-                                    fontWeight: FontWeight.w400)),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              //         isMatchFace = await EkycServices().runFaceMatch(
+              //             "http://10.0.3.50:5000",
+              //             selfieImage?.path,
+              //             extractedDataFromId?.imagePath);
+              //         setState(() {
+              //           isloading = false;
+              //         });
+              //       }
+              //     },
+              //     style: TextButton.styleFrom(
+              //       foregroundColor: Colors.white,
+              //       padding: const EdgeInsets.all(16.0),
+              //       backgroundColor: Colors.blue,
+              //       elevation: 9.0,
+              //       textStyle: const TextStyle(
+              //         fontSize: 20,
+              //       ),
+              //     ),
+              //     child: Text("Face match with Id")),
+              // Visibility(
+              //   visible: faceMatchButtonPressed,
+              //   child: Container(
+              //     width: double.infinity,
+              //     // padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+              //     child: Card(
+              //       shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.all(Radius.circular(15))),
+              //       color: Color(0xFFe3e6f5),
+              //       child: Column(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           SizedBox(
+              //             height: 15,
+              //           ),
+              //           Row(
+              //             crossAxisAlignment: CrossAxisAlignment.center,
+              //             children: [
+              //               SizedBox(
+              //                 width: 10,
+              //               ),
+              //               (isloading == true)
+              //                   ? SizedBox(
+              //                       child: CircularProgressIndicator(
+              //                         strokeWidth: 2,
+              //                         valueColor:
+              //                             AlwaysStoppedAnimation(Colors.white),
+              //                       ),
+              //                       height: 50.0,
+              //                       width: 50.0,
+              //                     )
+              //                   : (isMatchFace == true)
+              //                       ? Icon(
+              //                           Icons.check_circle_sharp,
+              //                           size: 40,
+              //                           color: Color(0xFF9677eca),
+              //                         )
+              //                       : Transform.rotate(
+              //                           angle: 45 * pi / 180,
+              //                           child: Icon(
+              //                             Icons.add_circle,
+              //                             size: 40,
+              //                             color: Colors.red,
+              //                           ),
+              //                         ),
+              //               SizedBox(
+              //                 width: 5,
+              //               ),
+              //               Expanded(
+              //                 child: Text(
+              //                     (isloading == true)
+              //                         ? '  Running face match...'
+              //                         : (isMatchFace == true)
+              //                             ? "Successful!!! ID Face matches with Selfie"
+              //                             : (isMatchFace == false)
+              //                                 ? "Something is wrong! Please try again! "
+              //                                 : 'NID Face does not match with Selfie',
+              //                     maxLines: 3,
+              //                     textAlign: TextAlign.left,
+              //                     style: TextStyle(
+              //                         fontSize: 17,
+              //                         height: 1.5,
+              //                         fontWeight: FontWeight.w400)),
+              //               ),
+              //               const SizedBox(
+              //                 width: 10,
+              //               ),
+              //             ],
+              //           ),
+              //           SizedBox(
+              //             height: 20,
+              //           ),
+              //  ],
+              //  ),
+              //  ),
+              //  ),
             ),
           ],
         ),
